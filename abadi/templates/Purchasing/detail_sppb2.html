@@ -1,0 +1,130 @@
+{% extends "purchasing/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+<!-- Page content  -->
+{% block content %}
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Form Input SPPB</h4>
+        <div class="template-demo">
+            <a href="/purchasing/viewsppb2">
+                <button type="button" class="btn btn-light btn-icon-text">
+                    <i class="typcn typcn-chevron-left btn-icon-prepend"></i>                                                    
+                    Kembali
+                </button>
+            </a>
+        </div>
+        <br>
+        <form class="form-sample" action="" method="post">
+        {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Tanggal</label>
+                <div class="col-sm-9">
+                  <input type="date" class="form-control" name="tanggal" value="{{tanggal}}" required/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nomor SPPB</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="nomor_sppb" value="{{datasppb.NoSPPB}}" required/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Keterangan</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" name="keterangan"  rows="3">{{datasppb.Keterangan}}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h4 class="card-title">Detail SPPB</h4>
+          <div id="artikels">
+            {% for i in datadetail %}
+            <div class="row" id="artikel_1">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="artikel_{{ forloop.counter }}">Artikel {{ forloop.counter }}:</label>
+                        <select class="form-control artikel" name="artikel[]">
+                            {% for item in data %}
+                              {% if item.IDDetailSPK == i.DetailSPK.IDDetailSPK %}
+                                <option selected value="{{ item.IDDetailSPK }}">{{ item.NoSPK }} - {{ item.KodeArtikel }}</option>
+                              {% else %}
+                                <option value="{{ item.IDDetailSPK }}">{{ item.NoSPK }} - {{ item.KodeArtikel }}</option>
+                              {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="quantity_1">Jumlah</label>
+                        <input type="number" class="form-control quantity" name="quantity[]" placeholder="Quantity" value="{{i.Jumlah}}" required>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label for="hapus1"></label>
+                    <a href="{% url 'delete_detailsppb2' i.IDDetailSPPB %}">
+                      <button type="button" class="btn btn-danger" onclick="deleteRow(this)"><i class="typcn typcn typcn-trash"></i></button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addProduct()">Tambahkan Artikel</button>
+        <br><br>
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </form>
+      </div>
+    </div>
+</div>
+
+{% block javascripts %}
+<script>
+    function addProduct() {
+        let productCounter = document.querySelectorAll('.artikel').length + 1;
+        const productRow = document.createElement('div');
+        productRow.className = "row";
+        productRow.id = `artikel_${productCounter}`;
+        productRow.innerHTML = `<div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="artikel_${productCounter}">Artikel ${productCounter}:</label>
+                                        <select class="form-control artikel" name="artikel[]">
+                                            {% for item in data %}
+                                            <option value="{{ item.IDDetailSPK }}">{{ item.NoSPK }} - {{ item.KodeArtikel }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="quantity_${productCounter}">Jumlah</label>
+                                        <input type="number" class="form-control quantity" name="quantity[]" placeholder="Quantity" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="hapus1"></label>
+                                    <button type="button" class="btn btn-danger" onclick="deleteRow(this)"><i class="typcn typcn typcn-trash"></i></button>
+                                </div>`;
+
+        document.getElementById('artikels').appendChild(productRow);
+    }
+
+    function deleteRow(button) {
+        button.closest('.row').remove();
+    }
+</script>
+{% endblock javascripts %}
+{% endblock content %}

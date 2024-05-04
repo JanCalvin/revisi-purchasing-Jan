@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Penyusun Artikel</h1>
+    <form action="" method="get">
+        <label for="">Kode Artikel</label>
+        <input type="text" name="kodeartikel">
+        <button type="submit">Cek</button>
+    </form>
+
+    {% if len(data) > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>Kode Stock</td>
+                <td>Nama</td>
+                <td>Satuan</td>
+                <td>Lokasi</td>
+                <td>Utama</td>
+                <td>action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>1</td>
+                <td>i.0</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

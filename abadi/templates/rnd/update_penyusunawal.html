@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Update Penyusun</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <label for="">Kode Stock</label>
+        <select name="kodeproduk" id="">
+            {% for i in kodestok %}
+            {% if i.KodeProduk == data.KodeProduk.KodeProduk %}
+            <option value="{{i.KodeProduk}}" selected> {{i.KodeProduk}}</option>
+            {% else %}
+            <option value="{{i.KodeProduk}}">{{i.KodeProduk}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <label for="">Nama</label>
+        <input type="text" value="{{data.KodeProduk.NamaProduk}}" disabled>
+        <br>
+        <label for="">Satuan</label>
+        <input type="text" name="" id="" value="{{data.KodeProduk.unit}}" disabled>
+        <br>
+        <label for="">Lokasi</label>
+        <select name="lokasi" id="">
+            {% for i in lokasi %}
+            {% if i.IDLokasi == data.Lokasi.IDLokasi %}
+            <option value="{{i.IDLokasi}}" selected> {{i.NamaLokasi}}</option>
+            {% else %}
+            <option value="{{i.IDLokasi}}">{{i.NamaLokasi}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <label for="">Utama</label>
+        <select name="status" id="">
+            {% if data.Status == 1 %}
+            <option value="{{data.Status}}" selected>Bahan Baku Utama</option>
+            <option value="{{data.Status}}">Bahan Baku nonutama</option>
+            {% else %}
+            <option value="{{data.Status}}">Bahan Baku Utama</option>
+            <option value="{{data.Status}}" selected>Bahan Baku nonutama</option>
+            {% endif %}
+        </select>
+        <br>
+        <label for="">Konversi</label>
+        <input type="number" value="{{konversi.Kuantitas}}" name="kuantitas">
+        <br>
+        <label for="">Konversi 2.5%</label>
+        <input type="text" value="{{konversi.allowance}}" disabled>
+        <br>
+
+        <button type="submit">Submit Data</button>
+    </form>
+</body>
+
+</html>

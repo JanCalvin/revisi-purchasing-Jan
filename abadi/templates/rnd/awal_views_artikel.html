@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function confirmDelete(id) {
+            var result = confirm("Apakah Anda yakin ingin menghapus data?");
+            if (result) {
+                // Jika pengguna mengkonfirmasi, kirimkan permintaan penghapusan ke server
+                window.location.href = "/deleteartikel/" + id;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <a href="{% url 'tambahdataartikel' %}">
+        <button>
+            Tambah Data
+        </button>
+    </a>
+    <table>
+        <thead>
+            <tr>
+                <th>Kode Artikel</th>
+                <th>Bahan Baku Utama</th>
+                <th>Keterangan</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{i.0.KodeArtikel}}</td>
+                {% if i.1 == 'Belum diset' %}
+                <td>{{i.1}}</td>
+                {% else %}
+                <td>{{i.1.KodeProduk}}</td>
+                {% endif %}
+                <td>{{i.0.keterangan}}</td>
+                <td>
+                    <!-- Tambahkan panggilan ke fungsi JavaScript dengan menyediakan ID data -->
+                    <button onclick="confirmDelete({{ i.0.id }})">Delete</button>
+                    <a href="{% url 'update_artikel' i.0.id %}">
+                        <button>Update</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+
+</html>

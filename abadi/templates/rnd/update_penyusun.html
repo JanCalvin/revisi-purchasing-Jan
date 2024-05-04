@@ -1,0 +1,139 @@
+{% extends "rnd/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+<!-- Page content  -->
+{% block content %}
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Edit Artikel : {{data.KodeArtikel}}</h4>
+            <div class="template-demo">
+                <a href="/viewproduksi">
+                    <button type="button" class="btn btn-light btn-icon-text">
+                        <i class="typcn typcn-chevron-left btn-icon-prepend"></i>
+                        Kembali
+                    </button>
+                </a>
+            </div>
+            <br>
+            <form class="form-sample" action="" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kode Produk</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" name="kodeproduk" id="">
+                                    {% for i in kodestok %}
+                                    {% if i.KodeProduk == data.KodeProduk.KodeProduk %}
+                                    <option value="{{i.KodeProduk}}" selected> {{i.KodeProduk}}</option>
+                                    {% else %}
+                                    <option value="{{i.KodeProduk}}">{{i.KodeProduk}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Nama Produk</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="{{data.KodeProduk.NamaProduk}}" disabled class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Satuan</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="" id="" value="{{data.KodeProduk.unit}}" disabled
+                                    class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Kode Produk</label>
+                            <div class="col-sm-9">
+                                <select name="lokasi" id="" class="form-control">
+                                    {% for i in lokasi %}
+                                    {% if i.IDLokasi == data.Lokasi.IDLokasi %}
+                                    <option value="{{i.IDLokasi}}" selected> {{i.NamaLokasi}}</option>
+                                    {% else %}
+                                    <option value="{{i.IDLokasi}}">{{i.NamaLokasi}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Status</label>
+                            <div class="col-sm-9">
+                                <select name="status" id="" class="form-control">
+                                    {% if data.Status == 1 %}
+                                    <option value="{{data.Status}}" selected>Bahan Baku Utama</option>
+                                    <option value="{{data.Status}}">Bahan Baku nonutama</option>
+                                    {% else %}
+                                    <option value="{{data.Status}}">Bahan Baku Utama</option>
+                                    <option value="{{data.Status}}" selected>Bahan Baku nonutama</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Konversi</label>
+                            <div class="col-sm-9">
+                                <input type="number" value="{{konversi.Kuantitas}}" name="kuantitas"
+                                    class="form-control" min="0" step="any">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Konversi 2.5%</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="{{konversi.allowance}}" disabled class="form-control">
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

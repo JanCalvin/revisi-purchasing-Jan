@@ -1,0 +1,70 @@
+{% extends "produksi/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+{% endblock javascripts %}
+
+<!-- Page content  -->
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Transaksi Mutasi</h4>
+          <div class="template-demo">
+            <a href="/produksi/addproduksi">
+                <button type="button" class="btn btn-success btn-icon-text">
+                    <i class="typcn typcn-plus btn-icon-prepend"></i>                                                    
+                    Tambah Data
+                </button>
+            </a>
+            </div>
+          <div class="table-responsive pt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Lokasi</th>
+                    <th>Kode Artikel</th>
+                    <th>Jumlah</th>
+                    <th>Keterangan</th>
+                    <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in dataproduksi %}
+                <tr>
+                    <td>{{i.Tanggal}}</td>
+                    <td>{{i.Lokasi.NamaLokasi}}</td>
+                    <td>{{i.KodeArtikel}}</td>
+                    <td>{{i.Jumlah}}</td>
+                    <td>{{i.Keterangan}}</td>
+                    <td>
+                        <!-- Tambahkan panggilan ke fungsi JavaScript dengan menyediakan ID data -->
+                        <div class="template-demo">
+                            <a href="{% url 'update_produksi' i.idTransaksiProduksi %}">
+                                <button type="button" class="btn btn-warning">
+                                    <i class="typcn typcn-edit"></i>                                                    
+                                </button>
+                            </a>
+                            <a href="{% url 'delete_produksi' i.idTransaksiProduksi %}">
+                                <button type="button" class="btn btn-danger">
+                                    <i class="typcn typcn typcn-trash"></i>                                                    
+                                </button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

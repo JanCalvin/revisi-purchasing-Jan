@@ -1,0 +1,141 @@
+{% extends "Purchasing/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+
+
+<!-- Page content  -->
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Penyusun Artikel : <span style="font-weight: lighter;">
+                        {{kodeartikel}}</span></h4>
+                <form action="" method="get">
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Masukkan Kode Produk"
+                                        aria-label="Masukkan Nama Artikel" name="kode_produk" list="listkodeproduk">
+                                    <datalist id="listkodeproduk">
+                                        {% for i in kodeprodukobj %}
+                                        <option value="{{i.KodeProduk}}">{{i.KodeProduk}} - {{i.NamaProduk}}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% if kodeartikel %}
+                <a href="{% url 'tambah_data_penyusun' kodeartikel.id %}">
+
+                    <button type="button" class="btn btn-success btn-icon-text">
+                        <i class="typcn typcn-plus btn-icon-prepend"></i>
+                        Tambah Data
+                    </button>
+                </a>
+                {% endif %}
+                <div class="table-responsive pt-3">
+                    {% if data %}
+                    
+                    <table class="table table-bordered" id="data_ksbb" name="data_ksbb">
+                        <thead>
+                            <tr>
+                                <td>Tanggal</td>
+                                <td>Kuantitas Masuk</td>
+                                <td>Harga Satuan Masuk</td>
+                                <td>Harga Total Masuk</td>
+                                <td>Kuantitas Keluar</td>
+                                <td>Harga Satuan Keluar</td>
+                                <td>Harga Total Keluar</td>
+                                <td>Kuantitas <br>Sisa</td>
+                                <td>Harga <br>Satuan Sisa</td>
+                                <td>Harga <br>Total Sisa</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Saldo Awal</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{Saldoawal.saldoawal}}</td>
+                                <td>{{Saldoawal.hargasatuanawal}}</td>
+                                <td>{{Saldoawal.hargatotalawal}}</td>
+                            </tr>
+                            {% for i in data %}
+                            <tr>
+                                <td>{{i.Tanggal}}</td>
+                                <td>{{i.Jumlahmasuk}}</td>
+                                <td>{{i.Hargamasuksatuan}}</td>
+                                <td>{{i.Hargamasuktotal}}</td>
+                                <td>{{i.Jumlahkeluar}}</td>
+                                <td>{{i.Hargakeluarsatuan}}</td>
+                                <td>{{i.Hargakeluartotal}}</td>
+                                <td>{{i.Sisahariini}}</td>
+                                <td>{{i.Hargasatuansisa}}</td>
+                                <td>{{i.Hargatotalsisa}}</td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table >
+          
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data ini?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <form id="deleteForm" method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    function confirmDelete(id) {
+        var deleteForm = document.getElementById('deleteForm');
+        deleteForm.action = "penyusun/delete/" + id;
+        $('#confirmDeleteModal').modal('show');
+    }
+
+</script>
+
+{% endblock javascripts %}
+{% endblock content %}

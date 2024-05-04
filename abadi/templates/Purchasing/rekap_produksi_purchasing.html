@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Rekap Barang Produksi</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kode Produk</th>
+                <th>Nama Barang</th>
+                <th>Kuantitas</th>
+                <th>Satuan</th>
+                <th>Keterangan</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            {% for i in datagudang %}
+            <tr>
+                <td>{{i.KodeProduk}}</td>
+                <td>{{i.KodeProduk__NamaProduk}}</td>
+                <td>{{i.sisa_produksi}}</td>
+                <td>{{i.KodeProduk__unit}}</td>
+                <td>{{i.KodeProduk__keterangan}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+<script>
+    // Mendapatkan elemen tbody
+    var tableBody = document.getElementById("tableBody");
+    // Mendapatkan semua baris di dalam tbody
+    var rows = tableBody.getElementsByTagName("tr");
+    // Loop melalui setiap baris dan tambahkan nomor urutan
+    for (var i = 0; i < rows.length; i++) {
+        // Membuat elemen kolom untuk nomor urutan
+        var cell = rows[i].insertCell(0);
+        // Mengatur nomor urutan
+        cell.textContent = i + 1;
+    }
+</script>
+</body>
+</html>

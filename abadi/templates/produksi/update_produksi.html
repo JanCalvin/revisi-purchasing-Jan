@@ -1,0 +1,92 @@
+{% extends "produksi/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+<!-- Page content  -->
+{% block content %}
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Form Transaksi Produksi</h4>
+        <div class="template-demo">
+            <a href="/produksi/viewproduksi">
+                <button type="button" class="btn btn-light btn-icon-text">
+                    <i class="typcn typcn-chevron-left btn-icon-prepend"></i>                                                    
+                    Kembali
+                </button>
+            </a>
+        </div>
+        <br>
+        <form class="form-sample" action="" method="post">
+        {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Tanggal</label>
+                <div class="col-sm-9">
+                  <input type="date" class="form-control" name="tanggal" value="{{ tanggal }}"/>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Artikel</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="exampleSelectGender" name="kode_artikel">
+                        {% for i in kode_artikel %}
+                          {% if i.KodeArtikel == produksi.KodeArtikel.KodeArtikel %}
+                            <option selected value="{{i.KodeArtikel}}">{{i.KodeArtikel}}</option>
+                          {% else %}
+                            <option value="{{i.KodeArtikel}}">{{i.KodeArtikel}}</option>
+                          {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Lokasi</label>
+                <div class="col-sm-9">
+                    <select class="form-control" id="exampleSelectGender" name="nama_lokasi">
+                        {% for i in nama_lokasi %}
+                          {% if i.NamaLokasi == produksi.Lokasi.NamaLokasi %}
+                            <option selected value="{{i.IDLokasi}}">{{i.NamaLokasi}}</option>
+                          {% else %}
+                            <option value="{{i.IDLokasi}}">{{i.NamaLokasi}}</option>
+                          {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Jumlah</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" name="jumlah" value="{{ produksi.Jumlah }}"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Keterangan</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" name="keterangan"  rows="3">{{ produksi.Keterangan }}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock content %}

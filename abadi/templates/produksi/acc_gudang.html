@@ -1,0 +1,60 @@
+{% extends "produksi/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+
+<!-- Page content  -->
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Notifikasi Barang Masuk Belum ACC</h4>
+          <div class="table-responsive pt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Klasifikasi</th>
+                    <th>Kode</th>
+                    <th>Nama Barang</th>
+                    <th>Kuantitas</th>
+                    <th>Satuan</th>
+                    <th>ACC</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in datatgudang %}
+                <tr>
+                    <td>{{i.tanggal}}</td>
+                    <td>{{i.KodeProduk.keterangan}}</td>
+                    <td>{{i.KodeProduk}}</td>
+                    <td>{{i.KodeProduk.NamaProduk}}</td>
+                    <td>{{i.jumlah}}</td>
+                    <td>{{i.KodeProduk.unit}}</td>
+                    <td>
+                        <!-- Tambahkan panggilan ke fungsi JavaScript dengan menyediakan ID data -->
+                        <div class="template-demo">
+                            <a href="{% url 'acc_gudang' i.IDDetailTransaksiGudang %}">
+                                <button type="button" class="btn btn-success">
+                                    <i class="typcn typcn-tick"></i>                                                    
+                                </button>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

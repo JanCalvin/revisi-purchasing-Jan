@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Laporan Barang Masuk</h1>
+    <form action="">
+        <label for="">Tanggal Awal</label>
+        {% if data %}
+        <input type="date" name="tanggalawal" value="{{tanggalawal}}">
+        {% else %}
+        <input type="date" name="tanggalawal">
+        {% endif %}
+        <label for="">Tanggal Akhir</label>
+        {% if data %}
+        <input type="date" name="tanggalakhir" value="{{tanggalakhir}}">
+        {% else %}
+        <input type="date" name="tanggalakhir">
+        {% endif %}
+        <button type="submit">Generate Laporan</button>
+    </form>
+</body>
+
+{% if data %}
+<table>
+    <thead>
+        <tr>
+            <td>No</td>
+            <td>SJ Pembelian</td>
+            <td>Supplier</td>
+            <td>Kode Stock</td>
+            <td>Nama Barang</td>
+            <td>Satuan</td>
+            <td>Qty</td>
+            <td>Harga Satuan</td>
+            <td>Harga Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.NoSuratJalan}}</td>
+            <td>{{i.supplier}}</td>
+            <td>{{i.KodeProduk.KodeProduk}}</td>
+            <td>{{i.KodeProduk.NamaProduk}}</td>
+            <td>{{i.KodeProduk.unit}}</td>
+            <td>{{i.Jumlah}}</td>
+            <td>{{i.Harga}}</td>
+            <td>{{i.totalharga}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+</html>

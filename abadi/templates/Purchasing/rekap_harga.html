@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Rekap Harga Barang</h1>
+    <form action="" method="get">
+    
+        <label for="">Kode Produk</label>
+        <select name="kode_produk" id="kode_produk">
+            {% for item in kodeprodukobj %}
+                {% if item.KodeProduk == request.POST.kode_produk %}
+                    <option value="{{item.KodeProduk}}" selected>{{item.KodeProduk}}</option>
+                {% else %}
+                    <option value="{{item.KodeProduk}}">{{item.KodeProduk}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <label for="">Tanggal Awal</label>
+        <input type="date" name="awal" value="{{awal}}"required>
+        <label for="">Tanggal Akhir</label>
+        <input type="date" name="akhir" value="{{akhir}}" required>
+        <button type="submit">Cek</button>
+    </form>
+    <h3>Barang Masuk</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Supplier</th>
+                <th>Kuantitas</th>
+                <th>Harga</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in masuk_sjb %}
+                <tr>
+                    <td>{{item.tanggal}}</td>
+                    <td>{{item.supplier}}</td>
+                    <td>{{item.kuantitas}}</td>
+                    <td>{{item.harga}}</td>
+                    <td>{{item.harga_total_1}}</td>
+                </tr>
+            {% endfor %}
+          
+        </tbody>
+        
+    </table>
+    <h3>Barang Keluar</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Kuantitas</th>
+                <th>Harga</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key,value in harga_keluar.items %}
+            <tr>
+                <td>{{value.0}}</td>
+                <td>{{value.1}}</td>
+                <td>{{value.2}}</td>
+                <td>{{value.3}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

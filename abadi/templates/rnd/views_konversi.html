@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Konversi</h1>
+    <form action="" method="get">
+        <label for="">Kode Artikel</label>
+        {% if kodeartikel %}
+        <input type="text" name="kodeartikel" value="{{kodeartikel}}">
+        {% else %}
+        <input type="text" name="kodeartikel">
+        {% endif %}
+        <button type="submit">Cek</button>
+    </form>
+    {% if data %}
+    <table>
+        <thead>
+            <tr>
+                <td>No</td>
+                <td>Kode barang</td>
+                <td>Nama Barang</td>
+                <td>Satuan</td>
+                <td>Jumlah/Kotak</td>
+                <td>2.5%</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.0.KodeProduk}}</td>
+                <td>{{i.0.KodeProduk.NamaProduk}}</td>
+                <td>{{i.0.KodeProduk.unit}}</td>
+                <td>{{i.1.Kuantitas}}</td>
+                <td>{{i.2}}</td>
+                <td>
+                    <a href="{% url 'update_data_konversi_master' i.1.IDKodeKonversiMaster %}">
+                        <button>Update</button>
+                    </a>
+                    <a href="{% url 'delete_data_konversi_master' i.1.IDKodeKonversiMaster %}">
+                        <button>Delete</button>
+                    </a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+
+</html>

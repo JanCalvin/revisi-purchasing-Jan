@@ -1,0 +1,49 @@
+<!-- Di dalam file HTML template Anda (misalnya: create_nota.html) -->
+{% extends 'gudang/base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4>Form Nota</h4>
+    </div>
+    <div class="card-body">
+        <form id="notaForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nomor_nota">Nomor Nota:</label>
+                <input type="text" class="form-control" id="nomor_nota" name="nomor_nota">
+            </div>
+            <div id="products">
+                <div class="form-group">
+                    <label for="produk1">Produk 1:</label>
+                    <select class="form-control" id="produk_1" name="produk[]">
+                        {% for item in data %}
+                        <option value="{{ item.KodeProduk }}">{{ item.KodeProduk }} - {{ item.NamaProduk }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addProduct()">Tambahkan produk</button>
+            <br><br>
+            <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>
+</div>
+{% block javascripts %}
+<script>
+    function addProduct() {
+        let productCounter = document.querySelectorAll('[id^="produk"]').length + 1;
+        const productDiv = document.createElement('div');
+        productDiv.className = "form-group";
+        productDiv.id = `produk${productCounter}`;
+        productDiv.innerHTML = `<label for="produk_${productCounter}">Produk ${productCounter}:</label>
+                                <select class="form-control" id="produk_${productCounter}" name="produk[]">
+                                    {% for item in data %}
+                                        <option value="{{ item.KodeProduk }}">{{ item.KodeProduk }} - {{ item.NamaProduk }}</option>
+                                    {% endfor %}
+                                </select>`;
+        document.getElementById('products').appendChild(productDiv);
+    }
+</script>
+{% endblock javascripts %}
+{% endblock content %}

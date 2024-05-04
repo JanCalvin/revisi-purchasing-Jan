@@ -1,0 +1,84 @@
+{% extends "ppic/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+
+
+<!-- Page content  -->
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Laporan Stok Finish Good</h4>
+
+                <form class="form-inline" method="get">
+                    <div class="form-group">
+                        <label for="tanggalawal">Tanggal Awal</label>
+                        {% if tanggalawal%}
+                        <input type="date" class="form-control mb-2 mr-sm-2 ml-2" id="tanggalawal" name="tanggalawal"
+                            value="{{tanggalawal}}">
+                        {% else %}
+                        <input type="date" class="form-control mb-2 mr-sm-2 ml-2" id="tanggalawal" name="tanggalawal">
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+
+                        <label for="tanggalakhir">Tanggal Akhir</label>
+                        <div class="input-group mb-2 mr-sm-2 ml-2">
+                            {% if tanggalakhir %}
+                            <input type="date" class="form-control" id="tanggalakhir" placeholder="Username"
+                                name="tanggalakhir" value="{{tanggalakhir}}">
+                            {% else %}
+                            <input type="date" class="form-control" id="tanggalakhir" placeholder="Username"
+                                name="tanggalakhir">
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                </form>
+
+                <div class="table-responsive pt-3">
+                    {% if data %}
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>Artikel</td>
+                                <td>Jumlah</td>
+                                <td>Nilai FG (Rp)</td>
+                                <td>Nilai Total (Rp)</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                            <tr>
+                                <td>{{i.KodeArtikel}}</td>
+                                <td>{{i.Jumlahakumulasi}}</td>
+                                <td>{{i.HargaFG}}</td>
+                                <td>{{i.NilaiTotal}}</td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>Grand Total</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{grandtotal}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block javascripts %}
+
+{% endblock javascripts %}
+{% endblock content %}

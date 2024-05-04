@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Rekap Harga Barang</h1>
+    <form action="" method="get">
+
+        <label for="">Kode Produk</label>
+        <select name="kode_produk" id="kode_produk">
+            {% for item in kodeprodukobj %}
+            {% if item.KodeProduk == request.POST.kode_produk %}
+            <option value="{{item.KodeProduk}}" selected>{{item.KodeProduk}}</option>
+            {% else %}
+            <option value="{{item.KodeProduk}}">{{item.KodeProduk}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <button type="submit">Cek</button>
+    </form>
+    <h3>Rekap Harga</h3>
+    {% if data %}
+    <table border="1" >
+        <thead>
+            <tr>
+                <td>Tanggal</td>
+                <td>Kuantitas Masuk</td>
+                <td>Harga Satuan Masuk</td>
+                <td>Harga Total Masuk</td>
+                <td>Kuantitas Keluar</td>
+                <td>Harga Satuan Keluar</td>
+                <td>Harga Total Keluar</td>
+                <td>Kuantitas Sisa</td>
+                <td>Harga Satuan Sisa</td>
+                <td>Harga Total Sisa</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="7">Saldo Awal</td>
+                <td>{{Saldoawal.saldoawal}}</td>
+                <td>{{Saldoawal.hargasatuanawal}}</td>
+                <td>{{Saldoawal.hargatotalawal}}</td>
+
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{i.Tanggal}}</td>
+                <td>{{i.Jumlahmasuk}}</td>
+                <td>{{i.Hargamasuksatuan}}</td>
+                <td>{{i.Hargamasuktotal}}</td>
+                <td>{{i.Jumlahkeluar}}</td>
+                <td>{{i.Hargakeluarsatuan}}</td>
+                <td>{{i.Hargakeluartotal}}</td>
+                <td>{{i.Sisahariini}}</td>
+                <td>{{i.Hargasatuansisa}}</td>
+                <td>{{i.Hargatotalsisa}}</td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% include 'messages.html' %}
+</body>
+
+</html>

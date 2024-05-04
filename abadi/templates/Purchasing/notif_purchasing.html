@@ -1,0 +1,213 @@
+{% extends "Purchasing/base.html" %}
+{% load static %}
+
+
+<!-- Page content  -->
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Rekap pengadaan bahan</h4>
+        <div class="table-responsive pt-3">
+          <table class="table table-bordered" id="datapengadaan_notif">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Kode Bahan</th>
+                <th>Nama Bahan</th>
+                <th>Satuan</th>
+                <th>Kuantitas</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for key,value in rekap_pengadaan.items %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{key}}</td>
+                <td>{{value.0}}</td>
+                <td>{{value.2}}</td>
+                <td>{{value.1}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Notifikasi Barang Masuk Belum ACC</h4>
+        <div class="table-responsive pt-3">
+         
+          {% if filterobj %}
+          <table class="table table-bordered" id="databarang_notif">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>No Surat Jalan</th>
+                <th>Kode Produk</th>
+                <th>Nama Barang</th>
+                <th>Kuantitas</th>
+                <th>Satuan</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              {% for i in filterobj %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.NoSuratJalan.Tanggal}}</td>
+                <td>{{i.NoSuratJalan}}</td>
+                <td>{{i.KodeProduk}}</td>
+                <td>{{i.KodeProduk.NamaProduk}}</td>
+                <td>{{i.Jumlah}}</td>
+                <td>{{i.KodeProduk.unit}}</td>
+                <td>
+                  <!-- Tambahkan panggilan ke fungsi JavaScript dengan menyediakan ID data -->
+                  <div class="template-demo">
+                    <a href="{% url 'update_verif_purchasing' i.IDDetailSJPembelian %}">
+                      <button type="button" class="btn btn-success">
+                        <i class="typcn typcn-tick"></i>
+                      </button>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Notifikasi SPK Belum ACC</h4>
+        <div class="table-responsive pt-3">
+          {% if filter_spkobj %}
+          <table class="table table-bordered" id="dataspk_notif">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Tanggal</th>
+                <th>No SPK</th>
+                <th>Keterangan</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody2">
+              {% for j in filter_spkobj %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{j.Tanggal}}</td>
+                <td>{{j.NoSPK}}</td>
+                <td>{{j.Keterangan}}</td>
+                <td>
+                  <!-- Tambahkan panggilan ke fungsi JavaScript dengan menyediakan ID data -->
+                  <form id="accForm" action="{% url 'acc_spk' j.id %}" method="post" >
+                    {% csrf_token %}
+                    <div class="template-demo">
+                      <a>
+                        <button type="submit" class="btn btn-success">
+                          <i class="typcn typcn-tick"></i>
+                        </button>
+                      </a>
+                      <!-- <a>
+                        <button onclick="notifACC('{{ j.id }}')" type="button" class="btn btn-success">
+                          <i class="typcn typcn-tick"></i>
+                        </button>
+                      </a> -->
+                    </div>
+
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade" id="confirmACCModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Jangan lupa cek data SPK</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-body">
+          Apakah Anda yakin ingin mengACC data ini?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Konfirmasi ACC SPK</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Apakah Anda yakin ingin mengACC data ini?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <form id="deleteForm" method="post" action="">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-success">ACC</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+{% block javascripts %}
+<!-- <script>
+  function alertspk(id){
+    var accForm = document.getElementById('accForm');
+    accForm.action = "acc_spk/" +id;
+    $('#confirmACCModal').modal('show');
+    // alert("Jangan lupa cek data SPK!");
+  }
+</script>
+<script>
+  function notifACC(id){
+    var accForm = document.getElementById('accForm');
+    accForm.action = "acc_spk/" +id;
+    $('#confirmACCModal').modal('show');
+  }
+
+</script> -->
+<!-- <script>
+  function confirmDelete(id) {
+    var deleteForm = document.getElementById('deleteForm');
+    deleteForm.action = "acc_spk/" + id;
+    $('#confirmDeleteModal').modal('show');
+  }
+</script> -->
+{% endblock javascripts %}
+{% endblock content %}

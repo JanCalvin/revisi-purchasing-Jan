@@ -1,0 +1,121 @@
+{% extends "Purchasing/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+<!-- Page content  -->
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Form Transaksi Gudang</h4>
+        <div class="template-demo">
+            <a href="/purchasing/notif_purchasing">
+                <button type="button" class="btn btn-light btn-icon-text">
+                    <i class="typcn typcn-chevron-left btn-icon-prepend"></i>                                                    
+                    Kembali
+                </button>
+            </a>
+        </div>
+        <br>
+        <form class="form-sample" action="" method="post">
+        {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Tanggal</label>
+                <div class="col-sm-9">
+                  <input type="text" class="form-control" name="tanggal_masuk" value="{{verifobj.NoSuratJalan.Tanggal}}" readonly />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Kode Produk</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"  name="nama_produk" value="{{verifobj.KodeProduk.NamaProduk}}" readonly />
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Nama Produk</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control"  name="nama_produk" value="{{verifobj.KodeProduk.NamaProduk}}" readonly />
+                  </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Kuantitas</label>
+                <div class="col-sm-9">
+                  <input type="number" class="form-control" name="kuantitas_masuk" id="kuantitas_masuk" value="{{verifobj.Jumlah}}" readonly/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Harga Satuan</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" name="harga_barang" id="harga_barang" value="{{verifobj.Harga}}" onchange="update_harga_total()" required/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Harga Total</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control" name="harga_total" id="harga_total" value="{{harga_total}}" readonly/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Supplier</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="supplier" value="{{verifobj.NoSuratJalan.supplier}}" required/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">PO</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="po_barang" value="{{verifobj.NoSuratJalan.PO}}" required/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        </form>
+      </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function update_harga_total(){
+var kuantitas = $("#kuantitas_masuk").val();
+var harga_satuan = $("#harga_barang").val();
+var harga_total_barang = kuantitas*harga_satuan;
+$.ajax ({
+    success:function(data)
+    {
+
+        $("#harga_total").val(harga_total_barang);
+    }
+});
+}
+</script>
+{% endblock content %}

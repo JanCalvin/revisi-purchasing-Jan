@@ -1,0 +1,67 @@
+{% extends "rnd/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+{% block javascripts %}
+<script>
+    function confirmDelete(id) {
+        var result = confirm("Apakah Anda yakin ingin menghapus data?");
+        if (result) {
+            // Jika pengguna mengkonfirmasi, kirimkan permintaan penghapusan ke server
+            window.location.href = "/deleteproduksi/" + id;
+        }
+    }
+</script>
+{% endblock javascripts %}
+
+{% block content %}
+
+<h1>Laporan Artikel Keluar</h1>
+
+<form action="">
+    <label for="">Tanggal Awal</label>
+    {% if data %}
+    <input type="date" name="tanggalawal" value="{{tanggalawal}}">
+    {% else %}
+    <input type="date" name="tanggalawal">
+    {% endif %}
+    <label for="">Tanggal Akhir</label>
+    {% if data %}
+    <input type="date" name="tanggalakhir" value="{{tanggalakhir}}">
+    {% else %}
+    <input type="date" name="tanggalakhir">
+    {% endif %}
+    <button type="submit">Generate Laporan</button>
+</form>
+
+
+{% if data %}
+<table>
+    <thead>
+        <tr>
+            <td>No</td>
+            <td>Artikel</td>
+            <td>Jumlah</td>
+            <td>Harga FG</td>
+            <td>Total Harga</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.DetailSPK__KodeArtikel }}</td>
+            <td>{{i.total_jumlah }}</td>
+            <td>{{i.HargaFG}}</td>
+            <td>{{i.TotalNilai}}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock content %}

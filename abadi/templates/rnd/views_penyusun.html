@@ -1,0 +1,145 @@
+{% extends "rnd/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+
+
+<!-- Page content  -->
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Penyusun Artikel : <span style="font-weight: lighter;">
+                        {{kodeartikel}}</span></h4>
+                <form action="" method="get">
+                    <div class="row">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Masukkan Nama Artikel"
+                                        aria-label="Masukkan Nama Artikel" name="kodeartikel" list="listartikel">
+                                    <datalist id="listartikel">
+                                        {% for i in dataartikel %}
+                                        <option value="{{i.KodeArtikel}}">{{i.KodeArtikel}}</option>
+                                        {% endfor %}
+                                    </datalist>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% if kodeartikel %}
+                <a href="{% url 'tambah_data_penyusun' kodeartikel.id %}">
+
+                    <button type="button" class="btn btn-success btn-icon-text">
+                        <i class="typcn typcn-plus btn-icon-prepend"></i>
+                        Tambah Data
+                    </button>
+                </a>
+                {% endif %}
+                <div class="table-responsive pt-3">
+                    {% if data %}
+                    <table class="table table-bordered" id="datapenyusun">
+                        <thead>
+                            <tr>
+                                <td>No</td>
+                                <td>Kode Stock</td>
+                                <td>Nama</td>
+                                <td>Satuan</td>
+                                <td>Lokasi</td>
+                                <td>Utama</td>
+                                <td>Konversi</td>
+                                <td>Konversi (2.5%) </td>
+                                <td>Harga</td>
+                                <td>Harga konversi</td>
+                                <td>action</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in data %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.Penyusunobj.KodeProduk}}</td>
+                                <td>{{i.Penyusunobj.KodeProduk.NamaProduk}}</td>
+                                <td>{{i.Penyusunobj.KodeProduk.unit}}</td>
+                                <td>{{i.Penyusunobj.Lokasi.NamaLokasi}}</td>
+                                <td>{{i.Penyusunobj.Status}}</td>
+                                <td>{{i.Konversi}}</td>
+                                <td>{{i.Allowance}}</td>
+                                <td>{{i.HargaSatuan}}</td>
+                                <td>{{i.Hargakotak}}</td>
+                                <td>
+                                    <div class="template-demo">
+                                        <a>
+                                            <!-- Buat Modal di JS bawah -->
+                                            <button onclick="confirmDelete({{i.Penyusunobj.IDKodePenyusun}})"
+                                                type="button" class="btn btn-danger">
+                                                <i class="typcn typcn typcn-trash"></i>
+                                            </button>
+                                        </a>
+                                        <a href="{% url 'update_penyusun' i.Penyusunobj.IDKodePenyusun%}">
+                                            <button type="button" class="btn btn-warning">
+                                                <i class="typcn typcn-edit"></i>
+                                            </button>
+                                        </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <!-- <tr>
+                                <td>Nilai Total</td>
+                                <td colspan="10">{{nilaifg}}</td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data ini?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <form id="deleteForm" method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascripts %}
+<script>
+    function confirmDelete(id) {
+        var deleteForm = document.getElementById('deleteForm');
+        deleteForm.action = "penyusun/delete/" + id;
+        $('#confirmDeleteModal').modal('show');
+    }
+
+</script>
+
+{% endblock javascripts %}
+{% endblock content %}

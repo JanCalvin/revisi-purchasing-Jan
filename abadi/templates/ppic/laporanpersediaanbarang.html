@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Laporan Persediaan Barang</h1>
+
+    <form action="">
+        <label for="">Tanggal Awal</label>
+        {% if data %}
+        <input type="date" name="tanggalawal" value="{{tanggalawal}}">
+        {% else %}
+        <input type="date" name="tanggalawal">
+        {% endif %}
+        <label for="">Tanggal Akhir</label>
+        {% if data %}
+        <input type="date" name="tanggalakhir" value="{{tanggalakhir}}">
+        {% else %}
+        <input type="date" name="tanggalakhir">
+        {% endif %}
+        <button type="submit">Generate Laporan</button>
+    </form>
+</body>
+
+{% if data %}
+<h4>Total Barang Keluar : {{barangkeluar}}</h4>
+<h4>Total Barang Masuk : {{ barangmasuk }}</h4>
+<h4>Total Barang FG : {{ barangfg }}</h4>
+<h4>Total Saldo Awal : {{ saldoawal }}</h4>
+<br>
+<h5>Saldo Per Bagian</h5>
+
+<table>
+    <tr>
+        <td>WIP</td>
+        <td>{{saldowip}}</td>
+    </tr>
+    <tr>
+        <td>FG</td>
+        <td>{{barangfg}}</td>
+    </tr>
+    <tr>
+        <td>Total</td>
+        <td>{{saldototal}}</td>
+    </tr>
+</table>
+{% endif %}
+
+</html>

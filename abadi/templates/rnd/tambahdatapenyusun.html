@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Tambah Data Penyusun</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="">Kode Artikel</label>
+        <input type="text" value="{{kodeartikel.KodeArtikel}}" disabled>
+        <br>
+        <label for="">KodeProduk</label>
+        <select name="kodeproduk" id="">
+            {% for i in dataproduk %}
+            <option value="{{i.KodeProduk}}">{{i.NamaProduk}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="">Status</label>
+        <select name="Status" id="">
+            <option value="False">Bahan Baku Non Utama</option>
+            <option value="True">Bahan Utama</option>
+        </select>
+        <br>
+        <label for="">Lokasi</label>
+        <select name="lokasi" id="">
+            <option value="WIP">WIP</option>
+            <option value="FG">FG</option>
+        </select>
+        <br>
+
+        <button type="submit">Tambah Data</button>
+    </form>
+
+</body>
+
+</html>

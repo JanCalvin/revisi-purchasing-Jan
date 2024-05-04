@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Laporan Stok Gudang</h1>
+    <form action="">
+        <label for="">Tanggal Awal</label>
+        <input type="date" name="tanggalawal">
+        <label for="">Tanggal Akhir</label>
+        <input type="date" name="tanggalakhir">
+        <button type="submit">Generate Laporan</button>
+    </form>
+</body>
+
+{% if data %}
+<table>
+    <thead>
+        <tr>
+            <td>Artikel</td>
+            <td>Jumlah</td>
+            <td>Nilai FG</td>
+            <td>Nilai Total</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data%}
+        <tr>
+            <td>{{i.KodeArtikel}}</td>
+            <td>{{i.Jumlahakumulasi}}</td>
+            <td>{{i.HargaFG}}</td>
+            <td>{{i.NilaiTotal}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+</html>

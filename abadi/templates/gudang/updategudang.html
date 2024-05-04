@@ -1,0 +1,40 @@
+{% extends "gudang/base.html" %}
+{% load static %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+{% endblock stylesheets %}
+
+
+
+<!-- Page content  -->
+{% block content %}
+<div class="col-12 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Form update Surat Jalan Pembelian</h4>
+        <form class="form-group" action="" method="post">
+            {% csrf_token %}
+            <label class="col-sm-3 col-form-label" for="Tanggal" name='Tanggal'>Tanggal</label>
+            <input class="form-control mr-2 ml-2" type="date" name="Tanggal" value="{{tanggal}}" required>
+            <br>
+            <label class="col-sm-3 col-form-label" for="kode_produk" name='kode_produk'>Kode Produk</label>
+            <select class="form-control mr-2 ml-2" name="kode_produk" id="kode_produk" required>
+                {% for i in getproduk %}
+                {% if i.KodeProduk == kodeproduk  %}
+                <option value="{{i.KodeProduk}}" selected>{{i.KodeProduk}}</option>
+                {% else %}
+                <option value="{{i.KodeProduk}}">{{i.KodeProduk}}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+            <br>
+            <label class="col-sm-3 col-form-label" for="jumlah" name='jumlah'>Jumlah</label>
+            <input class="form-control mr-2 ml-2" type="number" name="jumlah" value="{{jumlah}}" required>
+            <br>
+            <button class="btn btn-primary mr-2" type="submit">Simpan Data</button>
+        </form>
+      </div>
+    </div>
+</div>
+{% endblock content %}

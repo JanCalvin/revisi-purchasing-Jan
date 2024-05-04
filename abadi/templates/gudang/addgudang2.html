@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Barang</title>
+</head>
+
+<body>
+    <h1>Form ADD BARANG</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="no_surat" name='no_surat'>Nomor Surat Jalan</label>
+        <input type="text" name="no_surat" required>
+        <br>     
+        <label for="Tanggal" name='Tanggal'>Tanggal</label>
+        <input type="date" name="Tanggal" required>
+        <br>     
+        <label for="supplier" name='supplier'>Supplier</label>
+        <input type="text" name="supplier" required>
+        <br>
+        <button type="submit">Simpan Data</button>
+    </form>
+</body>
+</html>
